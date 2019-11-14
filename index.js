@@ -1,6 +1,5 @@
-"use strict";
-
-const express = require("express");
+// Setup express
+const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -11,7 +10,7 @@ const axios = require('axios');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const line = require("@line/bot-sdk");
+const line = require('@line/bot-sdk');
 const config = {
   channelAccessToken: process.env.ACCESS_TOKEN,
   channelSecret: process.env.SECRET_KEY
@@ -23,7 +22,7 @@ app.get('/', (req, res) => {
   res.send('ok');
 });
 
-app.post("/hooks", line.middleware(config), (req, res) => {
+app.post('/hooks', line.middleware(config), (req, res) => {
   res.status(200).end();
 
   const events = req.body.events;
@@ -45,9 +44,12 @@ async function echoman(ev) {
 
   let infos;
   try {
-    infos = await axios.get(`https://api-tokyochallenge.odpt.org/api/v4/odpt:TrainInformation?odpt:operator=odpt.Operator:Keikyu&acl:consumerKey=${TRAIN_TOKEN}`);
+    infos = await axios.get(`https://api-tokyochallenge.odpt.org/api/v4/odpt:TrainInformation?odpt:operator=odpt.Operator:${ev.message.text}&acl:consumerKey=${TRAIN_TOKEN}`);
   } catch (e) {
-    console.log(e);
+    return client.replyMessage(ev.replyToken, {
+      type: 'text',
+      text: 'その線はありません！'
+    })
   }
   
   let text = '';
@@ -61,7 +63,7 @@ async function echoman(ev) {
   });
 
   return client.replyMessage(ev.replyToken, {
-    type: "text",
+    type: 'text',
     text: text
   });
 }
