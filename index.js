@@ -41,7 +41,12 @@ async function echoman(ev) {
   // Get token
   const TRAIN_TOKEN = process.env.TRAIN_TOKEN;
 
-  let infos = await axios.get(`https://api-tokyochallenge.odpt.org/api/v4/odpt:TrainInformation?odpt:operator=odpt.Operator:Keikyu&acl:consumerKey=${TRAIN_TOKEN}`);
+  let infos;
+  try {
+    infos = await axios.get(`https://api-tokyochallenge.odpt.org/api/v4/odpt:TrainInformation?odpt:operator=odpt.Operator:Keikyu&acl:consumerKey=${TRAIN_TOKEN}`);
+  } catch (e) {
+    console.log(e);
+  }
   
   infos.data.forEach((info) => {
     console.log(info['odpt:trainInformationText'])
