@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+app.use(express.static('public'));
+
 // Setup axios
 const axios = require('axios');
 
