@@ -17,6 +17,10 @@ const config = {
 
 const client = new line.Client(config);
 
+app.get('/', (req, res) => {
+  res.send('ok');
+});
+
 app.post("/hooks", line.middleware(config), (req, res) => {
   res.status(200).end();
 
