@@ -5,8 +5,9 @@ const PORT = process.env.PORT || 8000;
 
 app.use(express.static('public'));
 
-// Setup axios
+// Setup axios and trains information
 const axios = require('axios');
+const trains = require('./trains');
 
 // Enable environmental values
 const dotenv = require('dotenv');
@@ -73,33 +74,7 @@ async function echoman(ev) {
     return client.replyMessage(ev.replyToken, {
       type: 'text',
       text: '遅延情報を知りたい路線を選んでください！',
-      quickReply: {
-        items: [{
-            type: 'action',
-            action: {
-              type: 'message',
-              label: '東急電鉄',
-              text: 'Tokyu'
-            }
-          },
-          {
-            type: 'action',
-            action: {
-              type: 'message',
-              label: '西武鉄道',
-              text: 'Seibu'
-            }
-          },
-          {
-            type: 'action',
-            action: {
-              type: 'message',
-              label: '京急電鉄',
-              text: 'Keikyu'
-            }
-          }
-        ]
-      }
+      quickReply: trains
     })
   }
 
