@@ -53,7 +53,8 @@ async function echoman(ev) {
     } catch (e) {
       return client.replyMessage(ev.replyToken, {
         type: 'text',
-        text: 'その線はありません！'
+        text: 'その線はありません！',
+        quickReply: trains
       });
     }
 
