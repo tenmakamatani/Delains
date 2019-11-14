@@ -56,7 +56,7 @@ async function echoman(ev) {
   
   let text = '';
   infos.data.forEach((info) => {
-    if (infos.length === 1 || infos.indexOf(info) === infos.length - 1) {
+    if (infos.length === 1 || infos.data.indexOf(info) === infos.data.length - 1) {
       text += info['odpt:trainInformationText'].ja
     } else {
       text += info['odpt:trainInformationText'].ja + '\n'
