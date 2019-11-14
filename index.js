@@ -68,7 +68,8 @@ async function echoman(ev) {
 
     return client.replyMessage(ev.replyToken, {
       type: 'text',
-      text: text
+      text: text,
+      quickReply: trains
     });
   } else if (ev.type === 'follow' || ev.type === 'join') {
     return client.replyMessage(ev.replyToken, {
