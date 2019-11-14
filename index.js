@@ -54,7 +54,6 @@ async function echoman(ev) {
   
   let text = '';
   infos.data.forEach((info) => {
-    console.log(info['odpt:trainInformationText'])
     if (text === '') {
       text += info['odpt:trainInformationText'].ja
     } else {
