@@ -51,7 +51,7 @@ async function echoman(ev) {
     return client.replyMessage(ev.replyToken, {
       type: 'text',
       text: 'その線はありません！'
-    })
+    });
   }
   
   let text = '';
