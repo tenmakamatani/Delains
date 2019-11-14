@@ -53,7 +53,11 @@ async function echoman(ev) {
   let text = '';
   infos.data.forEach((info) => {
     console.log(info['odpt:trainInformationText'])
-    text += info['odpt:trainInformationText'].ja + '\n';
+    if (text === '') {
+      text += info['odpt:trainInformationText'].ja
+    } else {
+      text += info['odpt:trainInformationText'].ja + '\n'
+    }
   });
 
   return client.replyMessage(ev.replyToken, {
