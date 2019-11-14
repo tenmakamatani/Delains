@@ -34,7 +34,9 @@ app.post("/hooks", line.middleware(config), (req, res) => {
       echoman(ev)
     );
   }
-  Promise.all(promises);
+  Promise.all(promises).catch((err) => {
+    console.log(err);
+  });
 });
 
 async function echoman(ev) {
@@ -48,6 +50,7 @@ async function echoman(ev) {
     console.log(e);
   }
   
+  let text = '';
   infos.data.forEach((info) => {
     console.log(info['odpt:trainInformationText'])
     text += info['odpt:trainInformationText'].ja + '\n';
