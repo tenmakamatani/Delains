@@ -41,32 +41,55 @@ app.post('/hooks', line.middleware(config), (req, res) => {
 });
 
 async function echoman(ev) {
-  // Get token
-  const TRAIN_TOKEN = process.env.TRAIN_TOKEN;
 
-  let infos;
-  try {
-    infos = await axios.get(`https://api-tokyochallenge.odpt.org/api/v4/odpt:TrainInformation?odpt:operator=odpt.Operator:${ev.message.text}&acl:consumerKey=${TRAIN_TOKEN}`);
-  } catch (e) {
+  if (ev.type === 'message') {
+    // Get token
+    const TRAIN_TOKEN = process.env.TRAIN_TOKEN;
+
+    let infos;
+    try {
+      infos = await axios.get(`https://api-tokyochallenge.odpt.org/api/v4/odpt:TrainInformation?odpt:operator=odpt.Operator:${ev.message.text}&acl:consumerKey=${TRAIN_TOKEN}`);
+    } catch (e) {
+      return client.replyMessage(ev.replyToken, {
+        type: 'text',
+        text: 'その線はありません！'
+      });
+    }
+
+    let text = '';
+    infos.data.forEach((info) => {
+      if (infos.length === 1 || infos.data.indexOf(info) === infos.data.length - 1) {
+        text += info['odpt:trainInformationText'].ja
+      } else {
+        text += info['odpt:trainInformationText'].ja + '\n'
+      }
+    });
+
     return client.replyMessage(ev.replyToken, {
       type: 'text',
-      text: 'その線はありません！'
+      text: text
     });
+  } else if (ev.type === 'follow' || ev.type === 'join') {
+    return client.replyMessage(ev.replyToken, {
+      type: 'flex',
+      body: {
+        type: 'box',
+        layout: 'vertical',
+        spacing: 'md',
+        contents: [{
+            type: 'button',
+            style: 'primary',
+            action: {
+              type: 'uri',
+              label: 'Primary style button',
+              uri: 'https://delains.herokuapp.com'
+            }
+          }
+        ]
+      }
+    })
   }
-  
-  let text = '';
-  infos.data.forEach((info) => {
-    if (infos.length === 1 || infos.data.indexOf(info) === infos.data.length - 1) {
-      text += info['odpt:trainInformationText'].ja
-    } else {
-      text += info['odpt:trainInformationText'].ja + '\n'
-    }
-  });
 
-  return client.replyMessage(ev.replyToken, {
-    type: 'text',
-    text: text
-  });
 }
 
 app.listen(PORT, () => {
