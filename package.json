@@ -1,0 +1,7 @@
+{
+  "name": "delains-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "tenmakamatani <tenma_18n1102540@nnn.ed.jp>",
+  "license": "MIT"
+}
